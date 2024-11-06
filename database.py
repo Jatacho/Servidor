@@ -83,19 +83,18 @@ def in_ciclos_data():
 def out_esp_data():
     # Crear un diccionario con los datos que deseas enviar
     datos = {
-        "set_ciclos": 90,
-        "set_tiempo_apagado": 23456789,
-        "set_tiempo_encendido": 34567890
+        "set_ciclos": 999,
+        "set_tiempo_apagado": 999,
+        "set_tiempo_encendido": 999
     }
     # Devolver los datos como JSON
     return jsonify(datos)
 
 # Ruta para enviar datos JSON a la APP
 @app.route('/enviar-data-app', methods=['GET'])
-def out_obtener_datos_app():
+def out_datos_app():
     # Crear un diccionario con los datos que deseas enviar
     datos = {
-        "set_ciclos": {ciclos},
         "ciclos_transcurridos": {ciclos_transcurridos},
         "estado_SSR": {estado_SSR}
     }
@@ -104,16 +103,17 @@ def out_obtener_datos_app():
 
 # Ruta para recibir datos de app
 @app.route('/obtener-data-app', methods=['POST'])
-def sensor_data_app():
+def in_data_app():
     global seteo_ciclos
     global seteo_tiempo_apagado
     global seteo_tiempo_encendido
 
     data = request.json
     if data:
-        seteo_ciclos = data.get("seteo_ciclos")  
-        seteo_tiempo_apagado = data.get("seteo_tiempo_apagado")
         seteo_tiempo_encendido = data.get("seteo_tiempo_encendido")
+        seteo_tiempo_apagado = data.get("seteo_tiempo_apagado")
+        seteo_ciclos = data.get("seteo_ciclos") 
+
         print(f"Valor de ciclos recibido: {seteo_ciclos}")
         print(f"Valor de apagado recibido: {seteo_tiempo_apagado}")
         print(f"Valor de encendido recibido: {seteo_tiempo_encendido}")
